@@ -1,0 +1,23 @@
+# ANCHOR: Adaptive Network based on Cascaded Harmonic Offset Routing
+# Requirements for the ANCHOR time series analysis framework
+
+# Core deep learning framework
+torch>=2.0.0
+
+# Computer vision models and layers
+timm>=0.9.0
+
+# Numerical computing
+numpy>=1.21.0
+
+# Visualization (optional, used in some modules)
+matplotlib>=3.5.0
+
+# Additional utilities
+tqdm>=4.64.0  # for progress bars (recommended for training)
+scipy>=1.9.0  # for scientific computing (optional)
+
+# Development dependencies (optional)
+# black>=22.0.0  # code formatting
+# flake8>=5.0.0  # linting
+# pytest>=7.0.0  # testing
