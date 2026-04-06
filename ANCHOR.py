@@ -270,26 +270,18 @@ class Model(nn.Module):
         for _ in range(3):
             self.last_len = (self.last_len - 1) // 2 + 1
         
-        if self.task_name in ['anomaly_detection', 'imputation']:
-         if configs.data == 'UCRAnomaly':
-            self.is_ucr = True
-            self.out_len = 1
-            self.projection = nn.Linear(dims[-1] * self.last_len, self.out_len * self.enc_in)
-         else:
-            self.is_ucr = False
-            self.out_len = self.seq_len
-            self.projection = nn.Linear(dims[-1] * self.last_len, self.out_len * self.enc_in)
+        if self.task_name == 'anomaly_detection':
+            self.projection = nn.Linear(dims[-1] * self.last_len, self.seq_len * self.enc_in)
         elif self.task_name == 'classification':
             self.num_class = getattr(configs, 'num_class', 10)
             self.dropout_rate = getattr(configs, 'dropout', 0.1)
-            
             self.class_head = MLPLayer(
                 in_features=dims[-1] * self.last_len,
                 hidden_features=dims[-1],
                 out_features=self.num_class,
                 drop=self.dropout_rate
             )
-        elif self.task_name in ['long_term_forecast', 'short_term_forecast', 'few_shot_forecast', 'zero_shot_forecast']:
+        elif self.task_name == 'short_term_forecast':
             self.head = nn.Linear(dims[-1] * self.last_len, self.pred_len * self.enc_in)
         else:
             raise ValueError(f"Not available: {self.task_name}")
